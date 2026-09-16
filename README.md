@@ -4,7 +4,7 @@
 
 ## 👥 Thành viên nhóm & Phân công vai trò
 
-**Lớp:** 3A · **Phòng:** E402 · **Cụm:** ____ · **Track:** B - TRỢ LÝ DISCORD 
+**Lớp:** 3A · **Phòng:** E402 · **Cụm:** C3 · **Track:** B - TRỢ LÝ DISCORD 
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
