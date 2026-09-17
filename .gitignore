@@ -1,6 +1,10 @@
 .env
+codebase/.env
 data/*.sqlite
 data/official-sources.json
 data/discord-pack/
 test-results/
+codebase/test-results/
+.cp5-build/
+output/
 DATA_FORMAT.md

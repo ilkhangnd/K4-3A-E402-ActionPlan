@@ -8,9 +8,9 @@
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
-| 1 | Nguyễn Đình Khang|2A202602584|| |
-| 2 |Trần Long Khánh| 2A202602538| | |
-| 3 | Phạm Hồ Quang Dũng|2A202602860|| |
+| 1 | Nguyễn Đình Khang | 2A202602584 | Product, frontend, demo | UI chatbot, flow profile, video demo dự phòng và demo live |
+| 2 | Trần Long Khánh | 2A202602538 | Evidence, evaluation | Mining method, impact table, golden set và báo cáo kết quả |
+| 3 | Phạm Hồ Quang Dũng | 2A202602860 | Backend, prompt, data | Nguồn xác thực, SQLite, OpenAI API, guardrail và kiểm tra citation |
 
 > Nhóm copy nguyên file README này về repo của mình, rồi điền bảng trên. Cột **Phần việc đảm nhiệm** ghi càng cụ thể càng tốt.
 
