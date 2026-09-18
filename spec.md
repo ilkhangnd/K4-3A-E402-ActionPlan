@@ -96,9 +96,9 @@ Số tin là phép đếm thô từ 305 tin tag bot trong pack; riêng deadline/
 
 **[x] Working (web local + Discord demo).**
 
-- **Thật:** web local; SQLite lưu nguồn; 12 nguồn đã xác thực; chọn nguồn theo câu hỏi; gọi OpenAI Responses API thật (`store: false`); golden set 20 câu; kiểm tra citations/evidence nội bộ.
-- **Đã chạy trên Discord thật:** server `[DEMO] AI20K` đã có bot `Trợ lý AI Thực chiến` online; ba slash command `/hoi`, `/thiet-lap`, `/nguon` đã được đăng ký. Bot dùng cùng database và hàm trả lời với web; ngoài slash command, bot chỉ đọc tin có mention trực tiếp sau khi bật Message Content Intent theo [`codebase/discord-setup.md`](codebase/discord-setup.md).
-- **Mock/giới hạn:** nguồn được nhóm nhập thủ công, chưa đồng bộ tự động từ Discord/Phoenix/VLearn; không có đăng nhập hay dữ liệu cá nhân; không khẳng định Discord bot đã chạy trước khi có token/server thật.
+- **Thật:** web local; SQLite lưu nguồn; chọn nguồn theo câu hỏi; gọi OpenAI Responses API thật (`store: false`); golden set 20 câu; kiểm tra citations/evidence nội bộ. Round 2 chạy trên snapshot **12 nguồn**. Catalogue demo local tại lần bàn giao có **28 nguồn `official`** sau các lần import quản trị; đây là trạng thái vận hành mới, không sửa hồi tố số của Round 2.
+- **Đã chạy trên Discord thật:** server `[DEMO] AI20K` đã có bot `Trợ lý AI Thực chiến` online; slash command `/hoi`, `/thiet-lap`, `/nguon`, `/mo-diem-danh`, `/lien-ket-mssv`, `/diem-danh-cua-toi` được đăng ký. Bot dùng cùng database và hàm trả lời với web; ngoài slash command, bot chỉ đọc tin có mention trực tiếp sau khi bật Message Content Intent theo [`codebase/discord-setup.md`](codebase/discord-setup.md). Với QR riêng, bot trả QR ephemeral và, khi còn online, gửi xác nhận ephemeral sau record check-in thành công.
+- **Mock/giới hạn:** nguồn được nhóm nhập thủ công, chưa đồng bộ tự động từ Discord/Phoenix/VLearn; không có đăng nhập VinUni. Điểm danh QR lưu họ tên/MSSV/timestamp cục bộ cho từng phiên nên chỉ là demo có admin giám sát, không thay thế hệ thống điểm danh chính thức. Tính năng attendance không nằm trong mẫu số quality bar CP4.
 
 ### Automation
 
@@ -205,17 +205,25 @@ Kết quả chi tiết: [`eval/results-round-1.md`](eval/results-round-1.md) và
 
 Sau hai phiên, nhóm chỉ ghi thay đổi ở §9 nếu thay đổi thực sự bắt nguồn từ feedback. Template log nằm tại [`validation/README.md`](validation/README.md).
 
+### Trạng thái triển khai và validation tại thời điểm CP6
+
+- Website admin và bot Discord dùng chung SQLite. Tại lần kiểm tra gần nhất, SQLite local có **28 nguồn `official`**; đó là catalogue vận hành hiện tại sau import. Báo cáo Round 2 vẫn ghi **12 nguồn** vì đó là ảnh chụp cấu hình của lần chạy 17/09, không được sửa số hồi tố.
+- Hỏi đáp hiện diễn ra **ngay tại kênh Discord người học hỏi** bằng mention hoặc `/hoi`. Luồng DM hỏi đáp cũ đã bị loại bỏ; `/diem-danh-cua-toi` chỉ trả QR dạng ephemeral vì đây là tính năng riêng tư, không phải một hội thoại riêng.
+- Acceptance test phạm vi lớp đã chạy bằng `npm run test:scope`: E402 không nhận nguồn E403; D301 nhận đủ hai deadline chính thức thuộc hai đầu việc khác nhau. Chi tiết tại [`eval/class-scope-acceptance.md`](eval/class-scope-acceptance.md).
+- Chưa có validation consent-based với willing user ngoài nhóm. Vì không có consent/task/quote thật, nhóm **không nhận R6** và không dùng số `14/20` thay cho validation. Protocol sẵn sàng tại [`validation/README.md`](validation/README.md).
+- Sơ đồ dòng chảy triển khai thực tế tại [`jtbd-workflow.md`](jtbd-workflow.md): website chỉ import/quản lý nguồn và QR; Discord là điểm hỏi đáp; SQLite là nguồn dữ liệu chung.
+
 ### Multi-prototype
 
 **Chưa làm.** Nhóm đã chọn trục “conditional automation: có nguồn thì trả lời, thiếu nguồn thì chuyển Mod” từ cost-of-error, nhưng chưa có bằng chứng thử hai prototype độc lập nên không nhận điểm multi-prototype. Nếu còn thời gian, so sánh một output có nguồn nội tuyến với output cực ngắn chỉ có mã nguồn; giữ phương án được user tin và hiểu hơn.
 
-### Kế hoạch CP5–CP6
+### Checklist hoàn thiện sau CP5
 
-1. Tạo `[DEMO] AI20K`, tạo/mời `Trợ lý Thực Chiến`, chạy `/thiet-lap`, `/hoi`, `/nguon` bằng token local; thêm log thật sau khi chạy.
-2. Bổ sung thông báo Lab và Daily theo ngày khi BTC công bố; chạy lại toàn bộ 20 case, không đổi quality bar.
-3. Dry run 5 phút: một happy path (Daily) và một failure path (Lab02 thiếu nguồn).
-4. Quay video demo dự phòng, xuất PDF 6 trang, mỗi thành viên tập nói phần của mình.
-5. Nếu còn thời gian: mời ít nhất 2 willing users ngoài nhóm, giao task cụ thể, ghi quote nguyên văn vào `validation/` và thực hiện ít nhất một thay đổi.
+1. [x] Chạy luồng `/thiet-lap`, `/hoi`, `/nguon` với SQLite dùng chung và dùng mention để trả lời tại kênh gốc.
+2. [x] Kiểm tra scope E402/E403/D301 bằng test tự động; không đổi quality bar đã chốt.
+3. [x] Có deck PDF 6 trang với một happy path (Daily) và hard path (E403/Lab thiếu nguồn).
+4. [ ] Nếu nộp pitch lại: quay/mở thử video dự phòng theo [`demo-video-script.md`](demo-video-script.md) và ghi một dòng dry run thật tại [`dry-run.md`](dry-run.md). Không đánh dấu khi chưa diễn tập.
+5. [ ] Nếu có willing user thật: chạy protocol trong `validation/`, lưu consent/task/quote ẩn danh và chỉ sau đó mới cân nhắc R6.
 
 ## §9. Changelog
 
@@ -224,8 +232,18 @@ Sau hai phiên, nhóm chỉ ghi thay đổi ở §9 nếu thay đổi thực s�
 | 17/09/2026 — CP3 | Tạo chatbot local dùng OpenAI API thật và SQLite nguồn | Cần chứng minh quyết định trung tâm không dùng mock |
 | 17/09/2026 — CP3 | Nạp 20 câu hỏi thật thành golden set | Mining Discord pack cho thấy câu hỏi deadline/quy định là pain có hậu quả thật |
 | 17/09/2026 — CP3 | Nạp nguồn về Daily, Mentor Duty, Workshop, Gate 1, onboarding và quy trình dự án | Tăng coverage cho câu hỏi logistics có căn cứ |
-| 17/09/2026 — CP3 | Ẩn trích dẫn kỹ thuật khỏi bubble chat; vẫn kiểm tra nguồn ở backend | Người dùng cần câu trả lời gọn, không bị nhiễu bởi mã nguồn nội bộ |
+| 17/09/2026 — CP3 | Ẩn mã nguồn kỹ thuật khỏi bubble chat, nhưng hiện link “Tham khảo thêm tại” với tên nguồn dễ hiểu | Người dùng cần câu trả lời gọn nhưng vẫn cần đường dẫn để tự kiểm tra thông tin |
 | 17/09/2026 — CP4 | Chốt quality bar 14/20 trực tiếp + 100% safe routing | Tránh đổi chuẩn sau khi xem kết quả; ưu tiên không bịa deadline |
 | 17/09/2026 — CP4 | Chạy lại 20 case và thêm guardrail cho gia hạn cá nhân/mốc áp dụng chưa có ngày | TC02 và TC19 ở lượt chẩn đoán cho thấy cần phân loại thận trọng hơn; Round 2 đạt 20/20 contract |
 | 17/09/2026 — sau CP4 | Bổ sung HAX G10, User Input Grid, red-team appendix và mẫu chấm độc lập | Rà theo `02-guide.md` §2.5–2.6: làm rõ coverage và phần còn phải làm, không thay quality bar 14/20 đã chốt |
 | 17/09/2026 — sau CP4 | Triển khai bot Discord `/hoi`, `/thiet-lap`, `/nguon` vào server `[DEMO] AI20K`; bổ sung luồng hỏi bằng mention | Chuyển kênh tương tác từ UI demo sang đúng bối cảnh Discord, đồng thời giữ người dùng chủ động gọi bot thay vì bot đọc toàn bộ hội thoại |
+| 17/09/2026 — mở rộng demo | Thêm điểm danh QR có thời hạn, MSSV duy nhất theo phiên và xác nhận timestamp server | Mở rộng tiện ích cho buổi workshop; QR local cần được admin giám sát và không thay thế hệ thống điểm danh chính thức |
+| 17/09/2026 — Discord attendance | Chuyển luồng mở QR sang `/mo-diem-danh`; `/lien-ket-mssv` là opt-in để dùng QR riêng | Đưa tính năng vào đúng ngữ cảnh Discord thay vì chỉ trình diễn trên web; trạng thái xác nhận DM thử nghiệm đã được loại bỏ ở bản cuối |
+| 17/09/2026 — trợ lý điểm danh riêng | Thêm `/diem-danh-cua-toi`: QR token cá nhân được trả ephemeral, check-in yêu cầu bấm xác nhận | Sinh viên cần một điểm tương tác riêng tư ngoài câu hỏi công khai ở General; QR riêng vẫn tương thích QR chung do admin mở |
+| 17/09/2026 — đồng bộ nguồn | Website là nơi duy nhất ghi nguồn SQLite; bot đọc trực tiếp DB ở lượt hỏi tiếp theo | Tránh lệch dữ liệu web/Discord. Cách gửi DM cập nhật/theo lớp đã được thay thế bởi phản hồi tại kênh gốc ở bản cuối |
+| 18/09/2026 — đồng bộ ngữ cảnh Discord | Loại luồng DM hỏi đáp. Mention và `/hoi` trả lời ngay tại chính kênh gửi câu hỏi; QR cá nhân chỉ là ephemeral | Phản hồi từ demo cho thấy người học muốn giữ hội thoại ở General/kênh đang hỏi thay vì bị tách sang chat riêng |
+| 18/09/2026 — lọc nguồn theo lớp | Chuẩn hóa `audience` (`all`, `3A`, `3A-E402`, `3A-E403`, `3A-D301`) trong SQLite và thêm test E402/E403/D301 | Ngăn trả lời nhầm thông báo lớp; D301 vẫn nhận đủ deadline khác đầu việc |
+| 18/09/2026 — quản trị import nguồn | Website nhận JSON official, bot đọc trực tiếp cùng SQLite; không có cache Discord độc lập | Một nơi quản trị nguồn giúp thay đổi nguồn có hiệu lực ngay ở lượt hỏi sau và giữ citation truy vết được |
+| 18/09/2026 — import và catalogue demo | Chuẩn hóa cả JSON kỹ thuật lẫn JSON quản trị tiếng Việt; catalogue local tăng từ 13 lên 28 nguồn official | Admin có thể nạp thông báo theo phạm vi lớp trên website, còn số Round 2 vẫn giữ snapshot 12 nguồn để không sửa hồi tố metric CP4 |
+| 18/09/2026 — schedule/attendance guardrails | Cùng đầu việc + ngày nhưng khác giờ thì chuyển @Mod thay vì chọn một nguồn; QR scope riêng đối chiếu hồ sơ Discord trước khi ghi record | Ngăn hiểu nhầm lịch D301 và ngăn hồ sơ E402 được tính cho phiên E403; kiểm tra tại `eval/class-scope-acceptance.md` và `eval/attendance-acceptance.md` |
+| 18/09/2026 — xác nhận QR riêng | `/diem-danh-cua-toi` giữ QR ở dạng ephemeral; sau check-in thành công bot gửi lại xác nhận ephemeral cùng timestamp | Người học nhận được trạng thái hoàn tất ngay đúng tương tác đã gọi mà không tạo hội thoại DM |

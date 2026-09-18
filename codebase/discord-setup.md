@@ -5,7 +5,7 @@
 - Server: **`[DEMO] AI20K`**
 - Bot/app: **`Trợ lý Thực Chiến`**
 - Kênh gợi ý: `#hoi-tro-ly`, `#nguon-chinh-thuc`, `#mod-support`
-- Chức năng: mention `@Trợ lý AI Thực chiến câu hỏi`, `/hoi`, `/thiet-lap`, `/nguon` — cùng SQLite nguồn và OpenAI API với web app, không có câu trả lời hard-code.
+- Chức năng: mention `@Trợ lý AI Thực chiến câu hỏi`, `/hoi`, `/thiet-lap`, `/nguon` — cùng SQLite nguồn và OpenAI API với web app, không có câu trả lời hard-code. Bot chỉ xử lý trong kênh Discord của server và reply ngay tại nơi câu hỏi được gửi.
 
 ## Một lần thiết lập bằng tài khoản Discord của nhóm
 
@@ -13,7 +13,7 @@
 2. Vào [Discord Developer Portal](https://discord.com/developers/applications) → **New Application** → đặt tên `Trợ lý Thực Chiến`.
 3. Ở **Bot**, tạo bot và reset/copy token. Không gửi token qua chat, không đưa vào Git.
 4. Cũng ở trang **Bot**, kéo đến **Privileged Gateway Intents** và bật **MESSAGE CONTENT INTENT**, rồi bấm **Save Changes**. Quyền này chỉ để bot đọc phần câu hỏi khi học viên chủ động mention bot; bot bỏ qua mọi tin không mention nó.
-5. Trong **OAuth2 → URL Generator**, chọn scope `bot` và `applications.commands`; chọn tối thiểu quyền `View Channels`, `Send Messages`, `Use Application Commands`, `Embed Links`, `Read Message History`. Mở URL tạo ra và chọn server `[DEMO] AI20K` để mời bot.
+5. Trong **OAuth2 → URL Generator**, chọn scope `bot` và `applications.commands`; chọn tối thiểu quyền `View Channels`, `Send Messages`, `Attach Files`, `Use Application Commands`, `Embed Links`, `Read Message History`. Mở URL tạo ra và chọn server `[DEMO] AI20K` để mời bot.
 6. Lấy Application ID ở **General Information** và Server ID bằng Discord Developer Mode → chuột phải server → **Copy Server ID**.
 7. Điền vào file `../.env` local: `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_GUILD_ID`. File này đã bị ignore.
 8. Từ `codebase/`, cài dependency, đăng ký command và chạy bot:
@@ -30,4 +30,7 @@ npm run discord:bot
 
 - Không dùng token bot, token người dùng, API key, raw Discord pack hoặc SQLite làm nội dung demo/push Git.
 - `/thiet-lap` chỉ lưu lớp thực hành/lý thuyết theo Discord user ID; không hỏi hay lưu MSSV.
+- `/mo-diem-danh` chỉ cho người có quyền **Manage Server**: bot đăng QR điểm danh thật vào kênh. `link_quet` phải truy cập được từ điện thoại (URL public/tunnel hoặc IP LAN), không dùng `localhost`.
+- `/lien-ket-mssv` là lựa chọn tự nguyện để nhận QR điểm danh riêng. Mapping MSSV–Discord lưu cục bộ, không đi vào prompt OpenAI.
+- `/diem-danh-cua-toi` trả QR theo dạng ephemeral ngay tại kênh gọi lệnh, chỉ người gọi nhìn thấy. QR này không tự điểm danh khi mở; sinh viên vẫn bấm xác nhận trên trang quét. Nếu không có phiên mở, bot thông báo rõ.
 - Chỉ người trong nhóm cập nhật nguồn ở web local. Bot Discord chỉ đọc nguồn đã xác thực.

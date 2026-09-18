@@ -5,6 +5,7 @@ Thư mục này chỉ chứa bộ test và báo cáo đã ẩn dữ liệu nhạ
 ## Thành phần
 
 - `golden-set.md`: 20 câu hỏi được phát triển từ Discord pack đã ẩn danh.
+- `manual-test-cases.md`: bảng copy/paste đủ 20 prompt, output mong muốn, baseline Round 2 và ô ghi kết quả test lại.
 - `mining-method.md`: cách tạo bộ câu hỏi mà không công khai raw pack.
 - `user-input-grid.md`: coverage theo các chiều làm thay đổi câu trả lời đúng.
 - `red-team.md`: 3 case hiếm kiểm tra ranh giới an toàn; không đổi mẫu số quality bar đã khóa.

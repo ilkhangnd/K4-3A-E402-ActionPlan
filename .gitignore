@@ -1,10 +1,17 @@
 .env
 codebase/.env
 data/*.sqlite
+data/*.sqlite-shm
+data/*.sqlite-wal
 data/official-sources.json
 data/discord-pack/
+codebase/node_modules/
 test-results/
 codebase/test-results/
 .cp5-build/
+.cp5-pitch-build/
+.cp5-template-match/
 output/
-DATA_FORMAT.md
+tmp/
+data.json
+ActionPlan - Pitch Deck.pdf

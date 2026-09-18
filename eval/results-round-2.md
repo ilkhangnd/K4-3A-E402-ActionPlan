@@ -15,6 +15,8 @@
 
 JSON log đầy đủ được lưu local tại `test-results/cp3-53b2d6af-572e-489e-a5cd-f2feae48d8a2.json` và bị `.gitignore`. Báo cáo này chỉ giữ ID, hành vi mong đợi và kết quả để không công khai raw chat, output API, request ID hoặc nội dung nguồn riêng tư.
 
+Để test lại thủ công mà không làm lẫn với snapshot này, dùng [`manual-test-cases.md`](manual-test-cases.md): file đó có đủ 20 prompt, output mong muốn và cột kết quả cho lần chạy mới.
+
 ## Kết quả
 
 | ID | Hành vi mong đợi | Kết quả thực tế | Chấm |
